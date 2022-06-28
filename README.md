@@ -1,3 +1,37 @@
+Mindex Challege Complete 
+
+New End points
+
+Task #1 - Reporting Structure
+* READ
+    * HTTP Method: GET 
+    * URL: localhost:8080/reportingstructure/number_of_reports/{id}
+    * RESPONSE: String {calculated response}
+
+
+Task # 2 - Compensation
+Wasn't clear if I was supposed to reuse the original data repository or create a new one. I just modified the original object
+
+* CREATE
+    * HTTP Method: POST 
+    * URL: localhost:8080/compensation
+    * PAYLOAD: employeeId, effectiveDate, salary
+    * RESPONSE: Employee
+* READ
+    * HTTP Method: GET 
+    * URL: localhost:8080/compensation/{id}
+    * RESPONSE: Employee
+
+
+Note:
+Added /employee/list to return all employee records. Used for debugging purposes
+* READ
+    * HTTP Method: GET 
+    * URL: localhost:8080/employee/list
+    * RESPONSE: List Employee
+    
+    
+
 # Coding Challenge
 ## What's Provided
 A simple [Spring Boot](https://projects.spring.io/spring-boot/) web application has been created and bootstrapped 
