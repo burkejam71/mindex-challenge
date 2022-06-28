@@ -1,5 +1,7 @@
 Mindex Challege Complete 
 
+Any question, concerns, or modifications you would like to see please shoot me an email
+
 New End points
 
 Task #1 - Reporting Structure
