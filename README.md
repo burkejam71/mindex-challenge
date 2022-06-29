@@ -7,7 +7,7 @@ New End points
 Task #1 - Reporting Structure
 * READ
     * HTTP Method: GET 
-    * URL: localhost:8080/reportingstructure/number_of_reports/{id}
+    * URL: localhost:8080/directreports/count/{id}
     * RESPONSE: String {calculated response}
 
 
