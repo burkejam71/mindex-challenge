@@ -1,32 +1,39 @@
 package com.mindex.challenge.service.impl;
 
-import com.mindex.challenge.dao.EmployeeRepository;
 import com.mindex.challenge.data.Employee;
-import com.mindex.challenge.service.ReportingStructureService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.mindex.challenge.dao.EmployeeRepository;
+import com.mindex.challenge.service.DirectReportsService;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import java.util.UUID;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.*;
 import java.util.List;
 
-@Service
-public class ReportingStructureServiceImpl implements ReportingStructureService {
-
-	private static final Logger LOG = LoggerFactory.getLogger(ReportingStructureServiceImpl.class);
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class DirectReportsServiceImplTest {
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
-	@Override
-	public String read(String id) {
-		LOG.debug("Reporting Structure Service IMPL [{}]", id);
-		Employee employee = employeeRepository.findByEmployeeId(id);
-		if (employee == null) {
-			throw new RuntimeException("Invalid employeeId: " + id);
-		}
+	@Test
+	public void testReportCount() {
+		Employee employee = employeeRepository.findByEmployeeId("16a596ae-edd3-4847-99fe-c4518e82c86f");
 
+		assertNotNull(employee);
 		String employee_name = employee.getFirstName() + " " + employee.getLastName();
 		// Create List to store direct reports
 		List<String> direct_reports_id = new ArrayList<String>();
@@ -34,7 +41,7 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
 		// create list to store employees to check
 		List<String> checked_id = new ArrayList<String>();
 
-		checked_id.add(id);
+		checked_id.add("16a596ae-edd3-4847-99fe-c4518e82c86f");
 		List<Employee> direct_reports = new ArrayList<Employee>();
 		while (true) {
 			// pop employee to check off stack
@@ -62,10 +69,6 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
 			}
 		}
 
-		String result = "The numberOfReports for employee " + employee_name + " (employeeId: " + id
-				+ ") would be equal to "
-				+ direct_reports_id.size() + ".";
-		return result;
+		assertEquals(direct_reports_id.size(), 4);
 	}
-
 }
